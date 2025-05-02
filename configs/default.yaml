@@ -1,0 +1,15 @@
+general:
+  seed: 22
+  video_dir: tracking_videos/
+  output_dir: "viz"
+
+detector_tracker:
+  model_path: weights/yolov8s_960_visdrone.pt
+  imgsz: 960
+  conf_thres: 0.2
+  iou_thres: 0.3
+  agnostic_nms: true
+  device: "cpu"
+  target_classes: [3, 4, 5]
+  tracker_config: configs/bytetrack.yaml
+  max_age: 50
