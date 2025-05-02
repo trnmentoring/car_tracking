@@ -142,7 +142,6 @@ class DetectorTracker:
             if hasattr(boxes, 'id') and boxes.id is not None:
                 # Get all detection data
                 track_ids = boxes.id.int().cpu().tolist()
-                print("track_ids", track_ids)
                 bboxes = boxes.xyxy.cpu().tolist()
                 confs = boxes.conf.cpu().tolist()
                 cls_ids = boxes.cls.int().cpu().tolist()

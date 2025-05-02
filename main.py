@@ -8,7 +8,6 @@ import cv2
 import glob
 import argparse
 from utils import load_config, set_seed
-from time import time
 from detector_tracker import DetectorTracker
 
 
@@ -63,19 +62,16 @@ def process_video(video_path, detector_tracker, output_path=None, output_dir="vi
             break
         
         # Process frame with detection and tracking
-        t1=time()
-        if frame_count >-1 and frame_count <9000:
-            annotated_frame = detector_tracker.process_frame(frame)
-            print(time()-t1)
-            
-            # Write frame to output video
-            out.write(annotated_frame)
-            
-            # Print progress
-            if frame_count % 10 == 0:
-                progress = (frame_count / total_frames) * 100
-                objects = detector_tracker.get_vehicles()
-                print(f"Progress: {progress:.1f}% ({frame_count}/{total_frames}), Tracking {len(objects)} objects")
+        annotated_frame = detector_tracker.process_frame(frame)
+        
+        # Write frame to output video
+        out.write(annotated_frame)
+        
+        # Print progress
+        if frame_count % 10 == 0:
+            progress = (frame_count / total_frames) * 100
+            objects = detector_tracker.get_vehicles()
+            print(f"Progress: {progress:.1f}% ({frame_count}/{total_frames}), Tracking {len(objects)} objects")
     
     # Clean up
     cap.release()

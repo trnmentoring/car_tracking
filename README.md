@@ -20,7 +20,7 @@ It combines detection and tracking logic into a unified pipeline, leveraging YOL
 Put videos in tracking_videos folder
 
 git https://github.com/trnmentoring/car_tracking
-cd self_supervised
+cd car_tracking
 docker pull ultralytics/ultralytics:latest-cpu
 
 docker run --rm -it --shm-size 4G \
