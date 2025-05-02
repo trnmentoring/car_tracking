@@ -12,4 +12,5 @@ detector_tracker:
   device: "cpu"
   target_classes: [3, 4, 5]
   tracker_config: configs/bytetrack.yaml
-  max_age: 50
+  max_age: 60
+  tracking_color: [0, 255, 0]

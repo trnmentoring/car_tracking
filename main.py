@@ -120,13 +120,12 @@ def process_directory(config):
     
     # Process each video with the same detector-tracker instance
     for video_path in video_files:
-        #if "car3" in video_path:
-            print(f"\nProcessing: {video_path}")
-            process_video(
-                video_path,
-                detector_tracker=detector_tracker,
-                output_dir=output_dir
-            )
+        print(f"\nProcessing: {video_path}")
+        process_video(
+            video_path,
+            detector_tracker=detector_tracker,
+            output_dir=output_dir
+        )
 
 
 def main():

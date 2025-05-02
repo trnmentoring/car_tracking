@@ -87,6 +87,8 @@ class DetectorTracker:
         
         # Set model to evaluation mode on specified device
         self.model.to(self.params["device"])
+
+        self.tracking_color = self.params.get("tracking_color", (0, 255, 0))
         
         # Initialize tracking state
         self.reset()
@@ -99,9 +101,6 @@ class DetectorTracker:
         
         # Frame counter
         self.frame_count = 0
-        
-        # Store all class colors
-        self.class_colors = {}
         
         print("Tracker reset for new video")
     
@@ -180,15 +179,6 @@ class DetectorTracker:
                         )
                         
                         self.objects[track_id] = new_object
-                        
-                        # Assign color for this class if not already assigned
-                        if cls_id not in self.class_colors:
-                            # Generate a random color for this class
-                            self.class_colors[cls_id] = (
-                                np.random.randint(0, 255),
-                                np.random.randint(0, 255),
-                                np.random.randint(0, 255)
-                            )
         
         # Draw tracking results on original frame
         annotated_frame = self._draw_tracking_results(original_frame)
@@ -243,16 +233,13 @@ class DetectorTracker:
             # Get current position
             x1, y1, x2, y2 = obj.get_position()
             
-            # Get color for this class
-            color = self.class_colors.get(obj.class_id, (0, 255, 0))
-            
             # Draw bounding box
-            cv2.rectangle(annotated_frame, (int(x1), int(y1)), (int(x2), int(y2)), color, 2)
+            cv2.rectangle(annotated_frame, (int(x1), int(y1)), (int(x2), int(y2)), self.tracking_color, 2)
             
             # Add label with ID and class
             label = f"{obj.id}"
             cv2.putText(annotated_frame, label, (int(x1), int(y1) - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.tracking_color, 2)
         
         # Add frame counter
         cv2.putText(annotated_frame, f"Frame: {self.frame_count}", (10, 30),
